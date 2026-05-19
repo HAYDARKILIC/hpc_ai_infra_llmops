@@ -1,4 +1,4 @@
-# HPC-LLM-Forge
+# High-Performance AI Infrastructure & LLMOps
 
 A from-scratch engineering codex for the **High-Performance AI Infrastructure & LLMOps** course — a six-week trajectory through the systems that train frontier-scale LLMs.
 
@@ -25,7 +25,7 @@ Each notebook has a paired derivation in `docs/theory/`.
 ## Layout
 
 ```
-src/hpcllmforge/    Implementation package
+src/hpc_ai_infra_llmops/    Implementation package
 notebooks/          Six course notebooks
 docs/theory/        Math derivations
 configs/            DeepSpeed JSON + training YAML
@@ -40,8 +40,8 @@ examples/           Capstone training script
 Requires an NVIDIA GPU (compute capability ≥ 7.0), CUDA 12.4+, Python 3.11+.
 
 ```bash
-git clone https://github.com/HAYDARKILIC/hpc-llm-forge.git
-cd hpc-llm-forge
+git clone https://github.com/HAYDARKILIC/hpc_ai_infra_llmops.git
+cd hpc_ai_infra_llmops
 pip install -e ".[dev]"
 make test
 ```
