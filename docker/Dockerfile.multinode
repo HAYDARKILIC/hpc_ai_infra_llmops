@@ -1,0 +1,20 @@
+# syntax=docker/dockerfile:1.7
+# ---------------------------------------------------------------------------
+# Multi-node variant — adds NCCL tuning, IB / RoCE support, MPI for orchestration.
+# ---------------------------------------------------------------------------
+FROM hpc-llm-forge:latest
+
+ENV NCCL_IB_DISABLE=0 \
+    NCCL_SOCKET_IFNAME=^lo,docker \
+    NCCL_NET_GDR_LEVEL=PHB \
+    NCCL_P2P_LEVEL=NVL \
+    NCCL_ALGO=Ring \
+    NCCL_PROTO=Simple
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        openmpi-bin libopenmpi-dev libibverbs-dev && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install pdsh for multi-node DeepSpeed launches.
+RUN apt-get update && apt-get install -y --no-install-recommends pdsh && \
+    rm -rf /var/lib/apt/lists/*

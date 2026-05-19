@@ -1,0 +1,47 @@
+# ---------------------------------------------------------------------------
+# 1.3B-parameter GPT — multi-GPU H100 training config.
+# ---------------------------------------------------------------------------
+seed: 42
+
+model:
+  name: gpt_1b3
+  hidden_size: 2048
+  num_layers: 24
+  num_heads: 16
+  vocab_size: 50257
+  seq_length: 2048
+  tied_embeddings: true
+
+training:
+  global_batch_size: 1_024
+  micro_batch_size: 4
+  max_steps: 100_000
+  lr: 3.0e-4
+  min_lr: 3.0e-5
+  warmup_steps: 2_000
+  weight_decay: 0.1
+  grad_clip: 1.0
+  beta1: 0.9
+  beta2: 0.95
+
+parallelism:
+  data_parallel_size: 8
+  tensor_parallel_size: 1
+  pipeline_parallel_size: 1
+
+precision:
+  dtype: bf16
+
+zero:
+  stage: 3
+  offload_optimizer: cpu
+
+checkpointing:
+  interval_steps: 500
+  out_dir: /workspace/checkpoints/gpt_1b3
+  keep_last_n: 3
+
+logging:
+  project: hpc-llm-forge
+  run_name: gpt-1b3-zero3-h100x8
+  log_interval: 20
